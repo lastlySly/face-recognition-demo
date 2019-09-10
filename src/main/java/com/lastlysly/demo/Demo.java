@@ -17,9 +17,9 @@ import java.util.HashMap;
  **/
 public class Demo {
     //设置APPID/AK/SK
-    private static final String APP_ID = "17194690";
-    private static final String API_KEY = "bdKlBpTopnCNkgCYesdStz8u";
-    private static final String SECRET_KEY = "sbb3wdb2U7S8BgAllQiIyntfRQMzS2Ge";
+    private static final String APP_ID = "*******";
+    private static final String API_KEY = "************************";
+    private static final String SECRET_KEY = "********************";
 
 //    https://console.bce.baidu.com/ai/s/facelib/face?appId=1209144&groupId=test&uid=3&faceId=c468cb3685f389ea43a36e8bc27d19dc
 
