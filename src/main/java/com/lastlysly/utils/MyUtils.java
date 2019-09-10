@@ -63,7 +63,7 @@ public class MyUtils {
      * 扫描指定文件路径下所有人脸文件，并做人脸检测，并存入excel
      * @param filePath
      */
-    public static void scanFilesAndDetectFace(String filePath) throws InterruptedException, IOException {
+    public static void scanFilesAndDetectFaceAndSaveExcel(String filePath) throws InterruptedException, IOException {
         List<String> filesPathList = Lists.newArrayList();
         MyFileUtils.getFilesPathList(filePath,filesPathList);
         List<DetectFaceInfoView> detectFaceInfoViewList = Lists.newArrayList();
@@ -133,7 +133,7 @@ public class MyUtils {
     }
 
     /**
-     * excel数据填充
+     * 人脸检测excel数据填充
      * @param detectFaceInfoViewList
      * @param hssfWorkbook
      * @param hssfSheet
@@ -213,7 +213,7 @@ public class MyUtils {
                 }
                 row ++;
             }
-
+            byteArrayOut.close();
 //            row += faceNum;
         }
     }
@@ -313,7 +313,7 @@ public class MyUtils {
             ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
             BufferedImage bufferImg = ImageIO.read(searchFaceResponseViewList.get(i).getFile());
             ImageIO.write(bufferImg, "jpg", byteArrayOut);
-            byteArrayOut.close();
+
             if (0 != searchFaceResponseViewList.get(i).getError_code()){
                 //如果识别没有人脸
                 HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 255,(short) 0, row, (short) 1, row);
@@ -340,8 +340,6 @@ public class MyUtils {
             ByteArrayOutputStream returnFileByteArrayOut = new ByteArrayOutputStream();
             BufferedImage returnFileBufferImg = ImageIO.read(new File(searchFaceUserInfo.getUserInfo().getPhotoImgPath()));
             ImageIO.write(returnFileBufferImg, "jpg", returnFileByteArrayOut);
-            returnFileByteArrayOut.close();
-
             HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 255,(short) 0, row, (short) 1, row);
             HSSFClientAnchor returnFileAnchor = new HSSFClientAnchor(0, 0, 0, 255,(short) 4, row, (short) 5, row);
             anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
@@ -362,6 +360,8 @@ public class MyUtils {
                 iterator.next().setCellStyle(cellStyle);
             }
             row ++;
+            returnFileByteArrayOut.close();
+            byteArrayOut.close();
         }
     }
 

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.lastlysly.view.UserInfo;
 import com.lastlysly.view.facedetails.DetectFaceInfoView;
+import com.lastlysly.view.matchfaceresponse.MatchFaceResponseView;
 import com.lastlysly.view.searchfaceresponse.SearchFaceResponseView;
 import org.json.JSONObject;
 
@@ -94,7 +95,7 @@ public class MyFaceRecognitionUtils {
      * @param file2
      * @return
      */
-    public static String matchFace(File file1, File file2) throws IOException {
+    public static MatchFaceResponseView matchFace(File file1, File file2) throws IOException {
         return matchFace(FileToByte(file1), FileToByte(file2));
     }
 
@@ -107,7 +108,7 @@ public class MyFaceRecognitionUtils {
      *            人脸2
      * @return
      */
-    public static String matchFace(byte[] arg0, byte[] arg1) {
+    public static MatchFaceResponseView matchFace(byte[] arg0, byte[] arg1) throws IOException {
         String imgStr1 = Base64Util.encode(arg0);
         String imgStr2 = Base64Util.encode(arg1);
         MatchRequest req1 = new MatchRequest(imgStr1, "BASE64");
@@ -116,7 +117,10 @@ public class MyFaceRecognitionUtils {
         requests.add(req1);
         requests.add(req2);
         JSONObject res = client.match(requests);
-        return res.toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        MatchFaceResponseView matchFaceResponseView = objectMapper
+                .readValue(res.toString(2),MatchFaceResponseView.class);
+        return matchFaceResponseView;
     }
 
     /**
